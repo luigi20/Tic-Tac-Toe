@@ -34,11 +34,29 @@ const tic_tac_toe = {
         }
         return -1;
     },
+    stylize_winner_sequence(winner_sequence) {
+        winner_sequence.forEach((position) => {
+            this
+                .container_element
+                .querySelector(`div:nth-child(${position + 1})`)
+                .classList.add('winner');
+        });
+    },
 
     start: function () {
         this.board.fill('');
         this.draw();
         this.gameover = false;
+    },
+
+    restart: function () {
+        if (this.game_is_over() || this.gameover) {
+            this.start();
+            console.log('this game has been restarted!')
+        } else if (confirm('Are you sure you want to restart this game?')) {
+            this.start();
+            console.log('this game has been restarted!')
+        }
     },
 
     make_play: function (position) {
@@ -50,6 +68,7 @@ const tic_tac_toe = {
             console.log(winning_sequences_index);
             if (winning_sequences_index >= 0) {
                 this.game_is_over();
+                this.stylize_winner_sequence(this.winning_sequences[winning_sequences_index]);
             }
             else {
                 this.simbols.change();
