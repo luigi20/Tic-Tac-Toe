@@ -1,6 +1,5 @@
 # Tic-Tac-Toe
 tic-tac-toe using html, css and javascript
-# bethehero
 
 Um jogo da velha para meu treinamento em javascript
 
