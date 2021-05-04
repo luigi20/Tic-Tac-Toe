@@ -22,14 +22,49 @@ const tic_tac_toe = {
     init: function (container) {
         this.container_element = container;
     },
+    check_winning_sequences: function (simbol) {
+        console.log(simbol);
+        for (l in this.winning_sequences) {
+            if (this.board[this.winning_sequences[l][0]] == simbol &&
+                this.board[this.winning_sequences[l][1]] == simbol &&
+                this.board[this.winning_sequences[l][2]] == simbol) {
+
+                return l;
+            }
+        }
+        return -1;
+    },
+
+    start: function () {
+        this.board.fill('');
+        this.draw();
+        this.gameover = false;
+    },
+
     make_play: function (position) {
         if (this.gameover) return false;
         if (this.board[position] === "") {
             this.board[position] = this.simbols.options[this.simbols.turn_index];
             this.draw();
-            this.simbols.change();
+            let winning_sequences_index = this.check_winning_sequences(this.simbols.options[this.simbols.turn_index]);
+            console.log(winning_sequences_index);
+            if (winning_sequences_index >= 0) {
+                this.game_is_over();
+            }
+            else {
+                this.simbols.change();
+            }
+            return true;
+        } else {
+            return false;
         }
     },
+
+    game_is_over: function () {
+        this.gameover = true;
+        alert("Game Over");
+    },
+
     draw: function () {
         let content = "";
         for (l in this.board) {
